@@ -3,10 +3,10 @@ const express = require("express");
 const router = express.Router();
 
 //importaciones locales
-const {dashboardUser}=require('../controllers/users.controllers')
+const {favoritosUser}=require('../controllers/users.controllers')
 
 // mostrar formulario
-router.get('/dashboard',dashboardUser)
+router.get('/',favoritosUser)
 
 
 //exporta el objeto

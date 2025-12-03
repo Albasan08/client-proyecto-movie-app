@@ -1,6 +1,6 @@
 const express=require('express')
 
-const dashboardUser=async(req,res)=>{
+const favoritosUser=async(req,res)=>{
 
     //captura el token desde las cookies o headers
     const token =req.cookies?.token || req.headers["authorization"]?.split(" ")[1];
@@ -21,7 +21,7 @@ const dashboardUser=async(req,res)=>{
     //ver que llega en data
     //console.log(data)
 
-    res.render('dashboard.ejs',{data})
+    res.render('favoritos.ejs',{data})
 }
 
-module.exports={dashboardUser}
+module.exports={favoritosUser}
