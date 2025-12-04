@@ -3,11 +3,20 @@ const express = require("express");
 const router = express.Router();
 
 //importaciones locales
-const {favoritosUser}=require('../controllers/users.controllers')
+const {
+    viewLogin,
+    loginUser,
+    viewRegister,
+    registerUser,
+    favoritosUser,
+} = require("../controllers/users.controllers");
 
 // mostrar formulario
-router.get('/',favoritosUser)
-
+router.get("/", viewLogin);
+router.post("/login", loginUser);
+router.get("/signup", viewRegister);
+router.post("/signup", registerUser);
+router.get("/movies", favoritosUser);
 
 //exporta el objeto
-module.exports=router
+module.exports = router;
