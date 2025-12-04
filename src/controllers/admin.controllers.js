@@ -1,5 +1,4 @@
 const express=require('express')
-const fs = require("fs/promises");
 
 const crearPelicula=async(req,res)=>{
 
@@ -17,9 +16,7 @@ const crearPelicula=async(req,res)=>{
     //crea un form data para enviar el archivo y datos del body juntos
     const formData = new FormData();
 
-    const buffer = await fs.readFile(req.file.path);
-
-    const blob = new Blob([buffer], { type: req.file.mimetype });
+    const blob = new Blob([req.file.buffer], { type: req.file.mimetype });
 
     //formData.append("body", JSON.stringify(body)); //añade body como string
 
@@ -45,16 +42,16 @@ const crearPelicula=async(req,res)=>{
     })
     
 
-    // if (respuesta) {//si el status de la respuesta (OK) es TRUE lo transforma a formato JSON
-    //     data = await respuesta.json()
+    if (respuesta) {//si el status de la respuesta (OK) es TRUE lo transforma a formato JSON
+        data = await respuesta.json()
 
-    //     //ver que llega en data
-    //     console.log(data) //esto se ve desde CMD no en consola del navegador
-    // } else {
-    //     data = { ok: false, mensaje: 'Error al crear la pelicula' };
-    // }
+        //ver que llega en data
+        console.log(data) //esto se ve desde CMD no en consola del navegador
+    } else {
+        data = { ok: false, mensaje: 'Error al crear la pelicula' };
+    }
 
-    res.render('crear.ejs')
+    res.render('crear.ejs',{data})
 }
 
 const crearPeliculaForm=async(req,res)=>{
