@@ -1,0 +1,38 @@
+
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies | Crear Pelicula</title>
+   </head>
+   <body>
+         
+         <h1>CREAR PELICULA</h1>
+         
+         
+         <form action="/movies/createmovie" method="POST" enctype="multipart/form-data">
+
+            <label for="url_imagen">Portada pelicula</label>
+            <input type="file" name="url_imagen">
+
+            <label for="titulo">Titulo</label>
+            <input type="text" name="titulo" id="titulo" placeholder="Titulo de la pelicula">
+            
+            <label for="director">Director</label>
+            <input type="text" name="director" id="director" placeholder="Director de la pelicula">
+
+            <label for="anio">Año</label>
+            <input type="text" name="anio" id="anio" placeholder="Año de lanzamiento">
+
+            <label for="genero">Genero</label>
+            <input type="text" name="genero" id="genero" placeholder="Genero de la pelicula">
+
+            <label for="duracion">Duracion</label>
+            <input type="text" name="duracion" id="duracion" placeholder="Duracion de la pelicula">
+      
+            <input type="submit" value="enviar">
+         </form>
+   </body>
+   </html>
+    

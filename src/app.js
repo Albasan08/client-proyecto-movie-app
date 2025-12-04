@@ -20,6 +20,7 @@ app.set("views", __dirname + "/views");
 
 /* RUTAS */
 app.use('/',require("./routes/users.routes.js"));
+app.use('/',require("./routes/admin.routes.js"));
 
 
 app.listen(port, () => {
