@@ -7,14 +7,16 @@ const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 
 //importaciones locales
-const {crearPelicula, crearPeliculaForm}=require('../controllers/admin.controllers')
+const {
+    crearPelicula,
+    crearPeliculaForm,
+} = require("../controllers/admin.controllers");
 
 // mostrar formulario
-router.get('/createmovie',crearPeliculaForm)
+router.get("/createmovie", crearPeliculaForm);
 
 //llamada al controlador del back para insertar lo que se ha recibido por formulario
-router.post('/movies/createmovie',upload.single('url_imagen'),crearPelicula)
-
+router.post("/createmovie", upload.single("url_imagen"), crearPelicula);
 
 //exporta el objeto
-module.exports=router
+module.exports = router;
