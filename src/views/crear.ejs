@@ -10,31 +10,29 @@
          
          <h1>CREAR PELICULA</h1>
 
-         <%if(data){%>
-            <p><%= data.mensaje%></p>
-         <%}%>
          
+             
          <form action="/movies/createmovie" method="POST" enctype="multipart/form-data">
 
-            <label for="url_imagen">Portada pelicula</label>
-            <input type="file" name="url_imagen">
+            <p><label for="url_imagen">Portada pelicula</label>
+            <input type="file" name="url_imagen"></p>
 
-            <label for="titulo">Titulo</label>
-            <input type="text" name="titulo" id="titulo" placeholder="Titulo de la pelicula">
+            <p><label for="titulo">Titulo</label>
+            <input type="text" name="titulo" id="titulo" placeholder="Titulo de la pelicula" ></p>
             
-            <label for="director">Director</label>
-            <input type="text" name="director" id="director" placeholder="Director de la pelicula">
+            <p><label for="director">Director</label>
+            <input type="text" name="director" id="director" placeholder="Director de la pelicula"></p>
 
-            <label for="anio">Año</label>
-            <input type="text" name="anio" id="anio" placeholder="Año de lanzamiento">
+            <p><label for="anio">Año</label>
+            <input type="text" name="anio" id="anio" placeholder="Año de lanzamiento"></p>
 
-            <label for="genero">Genero</label>
-            <input type="text" name="genero" id="genero" placeholder="Genero de la pelicula">
+            <p><label for="genero">Genero</label>
+            <input type="text" name="genero" id="genero" placeholder="Genero de la pelicula"></p>
 
-            <label for="duracion">Duracion</label>
-            <input type="text" name="duracion" id="duracion" placeholder="Duracion de la pelicula">
+            <p><label for="duracion">Duracion</label>
+            <input type="text" name="duracion" id="duracion" placeholder="Duracion de la pelicula"></p>
       
-            <input type="submit" value="enviar">
+            <p><input type="submit" value="enviar"></p>
          </form>
    </body>
    </html>

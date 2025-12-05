@@ -59,4 +59,87 @@ const crearPeliculaForm=async(req,res)=>{
     res.render('crear.ejs')
 }
 
-module.exports={crearPelicula,crearPeliculaForm}
+
+const editarPelicula = async (req, res) => {
+
+    // Captura el token desde cookies o headers
+    const token = req.cookies?.token || req.headers["authorization"]?.split(" ")[1];
+
+    // ID de la película
+    const { id } = req.params;
+
+    // Datos enviados desde el formulario
+    const body = req.body;
+
+    let data;
+
+    // Crear FormData para enviar texto + archivo
+    const formData = new FormData();
+
+    // Si llega archivo, lo convertimos a Blob
+    if (req.file) {
+        const blob = new Blob([req.file.buffer], { type: req.file.mimetype });
+        formData.append("url_imagen", blob, req.file.originalname);
+    }
+
+    // Añadir campos del body
+    formData.append("titulo", body.titulo);
+    formData.append("director", body.director);
+    formData.append("anio", body.anio);
+    formData.append("genero", body.genero);
+    formData.append("duracion", body.duracion);
+
+    // Debug
+    console.log([...formData.entries()]);
+
+    // Llamada a la API para editar
+    const respuesta = await fetch(`http://localhost:3000/movies/editmovie/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`
+            // NO pongas Content-Type, fetch lo añade solo con boundary
+        },
+        body: formData
+    });
+
+    data = await respuesta.json();
+
+    res.render('editar.ejs', { data });
+};
+
+const editarPeliculaForm = async (req, res) => {
+
+    const { id } = req.params;
+
+    // Captura el token desde cookies o headers
+    const token = req.cookies?.token || req.headers["authorization"]?.split(" ")[1];
+
+    try {
+        // Llamada a la API para obtener los datos actuales
+        const respuesta = await fetch(`http://localhost:3000/movies/editmovie/${id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const data = await respuesta.json();
+       
+
+        // Renderiza la vista con los datos de la película
+        res.render("editar.ejs", {data: data.data });
+
+    } catch (error) {
+        console.error("Error al cargar datos de la película:", error);
+
+       /*  res.render("editar.ejs", {
+            data: { mensaje: "Error al cargar la película",  });*/ 
+            // res.render({ data: null })
+        
+    } 
+
+         res.render("editar.ejs")
+};
+
+
+module.exports={crearPelicula,crearPeliculaForm,editarPelicula,editarPeliculaForm}

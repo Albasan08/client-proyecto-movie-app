@@ -10,6 +10,8 @@ const upload = multer({ storage: multer.memoryStorage() });
 const {
     crearPelicula,
     crearPeliculaForm,
+    editarPelicula,
+    editarPeliculaForm
 } = require("../controllers/admin.controllers");
 
 // mostrar formulario
@@ -17,6 +19,10 @@ router.get("/createmovie", crearPeliculaForm);
 
 //llamada al controlador del back para insertar lo que se ha recibido por formulario
 router.post("/createmovie", upload.single("url_imagen"), crearPelicula);
+
+// router.get("/editmovie/", editarPeliculaForm);
+
+router.get("/editmovie/:id", /* upload.single("url_imagen") ,editarPelicula*/ editarPeliculaForm);
 
 //exporta el objeto
 module.exports = router;
