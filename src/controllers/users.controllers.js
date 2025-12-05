@@ -16,6 +16,11 @@ const loginUser = async (req, res) => {
 
         const data = await respuesta.json();
 
+        res.cookie("token", data.token, {
+            httpOnly: true,
+            maxAge: 12 * 60 * 60 * 1000,
+        });
+
         if (!data.ok) {
             return res.render("login", {
                 error: data.message,
@@ -31,6 +36,8 @@ const loginUser = async (req, res) => {
         });
     }
 };
+
+
 
 const viewRegister = async (req, res) => {
     res.render("register");
@@ -57,6 +64,11 @@ const registerUser = async (req, res) => {
                 email,
             });
         }
+
+        res.cookie("token", data.token, {
+            httpOnly: true,
+            maxAge: 12 * 60 * 60 * 1000,
+        });
 
         return res.redirect(data.redirect);
     } catch (error) {
@@ -101,5 +113,5 @@ module.exports = {
     loginUser,
     viewRegister,
     registerUser,
-    favoritosUser,
+    favoritosUser
 };
