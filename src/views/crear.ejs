@@ -10,8 +10,8 @@
          
          <h1>CREAR PELICULA</h1>
 
-         <%if(data){%>
-            <p><%= data.mensaje%></p>
+         <%if(typeof msg !== 'undefined' && msg){%>
+            <p><%= msg%></p>
          <%}%>
          
          <form action="/movies/createmovie" method="POST" enctype="multipart/form-data">

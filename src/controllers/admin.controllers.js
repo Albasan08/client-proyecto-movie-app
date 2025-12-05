@@ -5,22 +5,27 @@ const crearPelicula=async(req,res)=>{
     //captura el token desde las cookies o headers
     const token =req.cookies?.token || req.headers["authorization"]?.split(" ")[1];
 
-    // Capturar los elementos deseados - data de la película
-    
+    if (!req.file) {
+        return res.render("crear.ejs", { msg: "Debes seleccionar una imagen" });
+    }
+    // Capturar el body
      const body=req.body
 
-     console.log(body)
+     //console.log(body)
     //variable para guardar la respuesta en formato json
     let data;
 
     //crea un form data para enviar el archivo y datos del body juntos
     const formData = new FormData();
 
-    const blob = new Blob([req.file.buffer], { type: req.file.mimetype });
+    //req.file.buffer contiene los bytes del archivo subido
+    //const blob = new Blob([req.file.buffer], { type: req.file.mimetype }); //Para preservar el tipo del archivo
 
-    //formData.append("body", JSON.stringify(body)); //añade body como string
-
-    //formData.append("file", JSON.stringify(req.file)); //añade el archivo subido
+    const file = new File(
+        [req.file.buffer],          // contenido
+        req.file.originalname,      // nombre
+        { type: req.file.mimetype } // tipo de extension
+    );
 
     //añade cada campo del body individualmente
     formData.append("titulo", body.titulo);
@@ -28,10 +33,10 @@ const crearPelicula=async(req,res)=>{
     formData.append("anio", body.anio);
     formData.append("genero", body.genero);
     formData.append("duracion", body.duracion);
-    formData.append("url_imagen",  blob, req.file.originalname); //añade el archivo subido como blob
-
+    formData.append("url_imagen", file);
+    
     //bucle para ver que contiene el form data
-    console.log([...formData.entries()]);
+    //console.log([...formData.entries()]);
 
     //captura la respuesta de la API en ese ENDPOINT
     const respuesta = await fetch('http://localhost:3000/movies/createmovie',{
@@ -41,22 +46,20 @@ const crearPelicula=async(req,res)=>{
                                    body: formData
     })
     
+    data = await respuesta.json()
 
-    if (respuesta) {//si el status de la respuesta (OK) es TRUE lo transforma a formato JSON
-        data = await respuesta.json()
-
-        //ver que llega en data
-        console.log(data) //esto se ve desde CMD no en consola del navegador
-    } else {
-        data = { ok: false, mensaje: 'Error al crear la pelicula' };
+    // si HTTP no es 2xx o tu backend marca ok:false
+    if (!respuesta.ok || data.ok === false) {
+        const msg = data?.msg|| data?.errores;
+        console.log("Error backend:", msg);
+        return res.render("crear.ejs", { msg });
     }
 
-    res.render('crear.ejs',{data})
+    return res.render("crear.ejs", { msg: data.msg });
 }
 
 const crearPeliculaForm=async(req,res)=>{
-
-    res.render('crear.ejs')
+    return res.render('crear.ejs',{msg:null})
 }
 
 module.exports={crearPelicula,crearPeliculaForm}
