@@ -7,6 +7,9 @@ require("dotenv").config();
 const app = express();
 const port = process.env.port;
 
+//uso del methodOverride
+const methodOverride = require('method-override');
+
 //recursos
 app.use(express.static(__dirname + "/public"));
 
@@ -21,6 +24,8 @@ app.set("views", __dirname + "/views");
 /* RUTAS */
 app.use("/", require("./routes/users.routes.js"));
 app.use("/movies", require("./routes/admin.routes.js"));
+
+app.use(methodOverride('_method'));
 
 app.listen(port, () => {
     console.log(`Servidor-front a la escucha del puerto ${port} `);

@@ -98,19 +98,24 @@ const editarPelicula = async (req, res) => {
     // Llamada a la API para editar
     const respuesta = await fetch(`http://localhost:3000/movies/editmovie/${id}`, {
         method: 'PUT',
-        headers: {
-            'Authorization': `Bearer ${token}`
-            // NO pongas Content-Type, fetch lo añade solo con boundary
-        },
+        headers: {'Authorization': `Bearer ${token}`},
         body: formData
     });
 
-    data = await respuesta.json();
+        data = await respuesta.json();
 
-    res.render('editar.ejs', { data });
+        if (!respuesta.ok || data.ok === false) {
+            return res.render("editar.ejs", { data: body, msg: data.msg || "Error al guardar" });
+        }
+
+        //Redirige a la lista de películas o muestra mensaje de éxito
+        res.render("editar.ejs", { data: body, msg: "Película actualizada correctamente" });
+
+        res.redirect("/movies/listado"); 
+     // res.render('editar.ejs', { data });
 };
 
-const editarPeliculaForm = async (req, res) => {
+    const editarPeliculaForm = async (req, res) => {
 
     const { id } = req.params;
 
@@ -121,28 +126,19 @@ const editarPeliculaForm = async (req, res) => {
         // Llamada a la API para obtener los datos actuales
         const respuesta = await fetch(`http://localhost:3000/movies/editmovie/${id}`, {
             method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
+            headers: {'Authorization': `Bearer ${token}`}
         });
 
         const data = await respuesta.json();
-       
-
         // Renderiza la vista con los datos de la película
         res.render("editar.ejs", {data: data.data });
 
     } catch (error) {
         console.error("Error al cargar datos de la película:", error);
-
-       /*  res.render("editar.ejs", {
-            data: { mensaje: "Error al cargar la película",  });*/ 
-            // res.render({ data: null })
-        
-    } 
-
-         res.render("editar.ejs")
-};
-
+        // Renderiza con data vacío o mensaje de error
+        return res.render("editar.ejs", { data: null, msg: "Error al cargar la película"})
+        //  res.render("editar.ejs")        
+    }       
+}; 
 
 module.exports={crearPelicula,crearPeliculaForm,editarPelicula,editarPeliculaForm}
