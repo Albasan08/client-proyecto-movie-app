@@ -9,26 +9,32 @@
 
         <h1>Editar Película</h1>
 
-                <form action="/movies/editmovie<%= data.id %>" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="_method" value="PUT">              
+        <%if(typeof msg !== 'undefined' && msg){%>
+            <p style="color:red"><%- msg%></p>
+         <%}%>
+         
+         <form action="/movies/editmovie/<%= data.id_pelicula %>" method="POST" enctype="multipart/form-data">
+                             
 
-                <p><label for="titulo">Titulo</label>
+            <p><label for="url_imagen">Portada pelicula</label></p>   
+                <p><img src="http://localhost:3000/<%= data.url_imagen %>"></p>
+
+            <p><label for="titulo">Titulo</label>
                 <input type="text" name="titulo" id="titulo" value="<%= data.titulo %>" placeholder="Titulo de la pelicula"></p>
                 
-                <p><label for="director">Director</label>
+            <p><label for="director">Director</label>
                 <input type="text" name="director" id="director" value="<%= data.director %>" placeholder="Director de la pelicula"></p>
 
-                <p><label for="anio">Año</label>
+            <p><label for="anio">Año</label>
                 <input type="text" name="anio" id="anio" value="<%= data.anio %>" placeholder="Año de lanzamiento"></p>
 
-                <p><label for="genero">Genero</label>
+            <p><label for="genero">Genero</label>
                 <input type="text" name="genero" id="genero" value="<%= data.genero %>" placeholder="Genero de la pelicula"></p>
 
-                <p><label for="duracion">Duracion</label>
+            <p><label for="duracion">Duracion</label>
                 <input type="text" name="duracion" id="duracion" value="<%= data.duracion %>" placeholder="Duracion de la pelicula"></p>
 
-                <label for="url_imagen">Portada pelicula</label>
-                <p><img src="http://localhost:3000/<%= data.url_imagen %>"></p>
+            <p><label for="url_imagen">Actualizar portada:</label>
                 <input type="file" name="url_imagen"></p>
         
                 <p><button type="submit">Guardar cambios</button></p>           

@@ -11,7 +11,7 @@
          <h1>CREAR PELICULA</h1>
 
          <%if(typeof msg !== 'undefined' && msg){%>
-            <p><%= msg%></p>
+            <p style="color:red"><%- msg%></p>
          <%}%>
          
          <form action="/movies/createmovie" method="POST" enctype="multipart/form-data">

@@ -2,8 +2,10 @@
 const express = require("express");
 const router = express.Router();
 
+//para el control de imagenes subidas
 const multer = require('multer');
 
+//definicion de almacenamiento en memoria
 const upload = multer({ storage: multer.memoryStorage() });
 
 //importaciones locales
@@ -21,10 +23,10 @@ router.get("/createmovie", crearPeliculaForm);
 router.post("/createmovie", upload.single("url_imagen"), crearPelicula);
 
 // Mostrar formulario
-router.get("/editmovie/:id", /* upload.single("url_imagen") ,editarPelicula*/ editarPeliculaForm);
+router.get("/editmovie/:id",editarPeliculaForm,upload.single("url_imagen"));
 
 // Guardar cambios
-router.put("/editmovie/:id", upload.single('url_imagen'), editarPelicula);
+router.post("/editmovie/:id", upload.single('url_imagen'), editarPelicula);
 
 //exporta el objeto
 module.exports = router;

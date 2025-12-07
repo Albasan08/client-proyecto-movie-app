@@ -2,16 +2,19 @@
 
 const express = require("express");
 require("dotenv").config();
+const cookieParser = require('cookie-parser');
+
 
 //uso de express
 const app = express();
 const port = process.env.port;
 
 //uso del methodOverride
-const methodOverride = require('method-override');
+//const methodOverride = require('method-override');
 
 //recursos
 app.use(express.static(__dirname + "/public"));
+app.use(cookieParser());
 
 //parse application/X-ww-form-urlencoded
 //// Parsea datos de formularios (POST) hacia req.body.
@@ -25,7 +28,7 @@ app.set("views", __dirname + "/views");
 app.use("/", require("./routes/users.routes.js"));
 app.use("/movies", require("./routes/admin.routes.js"));
 
-app.use(methodOverride('_method'));
+//app.use(methodOverride('_method'));
 
 app.listen(port, () => {
     console.log(`Servidor-front a la escucha del puerto ${port} `);
