@@ -30,6 +30,6 @@ app.use("/movies", require("./routes/admin.routes.js"));
 
 //app.use(methodOverride('_method'));
 
-app.listen(port, () => {
+app.listen(PORT, () => {
     console.log(`Servidor-front a la escucha del puerto ${PORT} `);
 });
