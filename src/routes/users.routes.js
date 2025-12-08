@@ -9,14 +9,21 @@ const {
     viewRegister,
     registerUser,
     favoritosUser,
+    viewDashboard,
 } = require("../controllers/users.controllers");
+const {
+    evitarLoginSiAutenticado,
+} = require("../helper/evitarLoginSiAutenticado");
+
+const { protegerVista } = require("../helper/protegerVista");
 
 // mostrar formulario
-router.get("/", viewLogin);
+router.get("/", evitarLoginSiAutenticado, viewLogin);
 router.post("/login", loginUser);
-router.get("/signup", viewRegister);
+router.get("/signup", evitarLoginSiAutenticado, viewRegister);
 router.post("/signup", registerUser);
-router.get("/movies", favoritosUser);
+router.get("/dashboard", protegerVista("user"), viewDashboard);
+router.get("/movies", protegerVista("user"), favoritosUser);
 
 //exporta el objeto
 module.exports = router;

@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 
 //uso de express
 const app = express();
-const port = process.env.port;
+const PORT = process.env.PORT;
 
 //uso del methodOverride
 //const methodOverride = require('method-override');
@@ -30,6 +30,6 @@ app.use("/movies", require("./routes/admin.routes.js"));
 
 //app.use(methodOverride('_method'));
 
-app.listen(port, () => {
-    console.log(`Servidor-front a la escucha del puerto ${port} `);
+app.listen(PORT, () => {
+    console.log(`Servidor-front a la escucha del puerto ${PORT} `);
 });

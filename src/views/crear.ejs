@@ -1,41 +1,79 @@
-
-   <!DOCTYPE html>
-   <html lang="en">
-   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movies | Crear Pelicula</title>
-   </head>
-   <body>
-         
-         <h1>CREAR PELICULA</h1>
-
-         <%if(typeof msg !== 'undefined' && msg){%>
-            <p style="color:red"><%- msg%></p>
-         <%}%>
-         
-         <form action="/movies/createmovie" method="POST" enctype="multipart/form-data">
-
-            <p><label for="url_imagen">Portada pelicula</label>
-            <input type="file" name="url_imagen"></p>
-
-            <p><label for="titulo">Titulo</label>
-            <input type="text" name="titulo" id="titulo" placeholder="Titulo de la pelicula" ></p>
-            
-            <p><label for="director">Director</label>
-            <input type="text" name="director" id="director" placeholder="Director de la pelicula"></p>
-
-            <p><label for="anio">Año</label>
-            <input type="text" name="anio" id="anio" placeholder="Año de lanzamiento"></p>
-
-            <p><label for="genero">Genero</label>
-            <input type="text" name="genero" id="genero" placeholder="Genero de la pelicula"></p>
-
-            <p><label for="duracion">Duracion</label>
-            <input type="text" name="duracion" id="duracion" placeholder="Duracion de la pelicula"></p>
-      
-            <p><input type="submit" value="enviar"></p>
-         </form>
-   </body>
-   </html>
-    
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Movies | Crear Pelicula</title>
+        <link rel="stylesheet" href="/css/main.css" />
+    </head>
+    <body>
+        <div class="create-movie-container">
+            <h1 class="create-movie-title">CREAR PELICULA</h1>
+            <% if (typeof msg !== 'undefined' && msg) { %>
+            <p class="create-movie-error"><%- msg %></p>
+            <% } %>
+            <form
+                class="create-movie-form"
+                action="/movies/createmovie"
+                method="POST"
+                enctype="multipart/form-data"
+                novalidate
+            >
+                <div class="create-movie-field">
+                    <label for="url_imagen">Portada pelicula</label>
+                    <input type="file" name="url_imagen" />
+                </div>
+                <div class="create-movie-field">
+                    <label for="titulo">Titulo</label>
+                    <input
+                        type="text"
+                        name="titulo"
+                        id="titulo"
+                        placeholder="Titulo de la pelicula"
+                    />
+                </div>
+                <div class="create-movie-field">
+                    <label for="director">Director</label>
+                    <input
+                        type="text"
+                        name="director"
+                        id="director"
+                        placeholder="Director de la pelicula"
+                    />
+                </div>
+                <div class="create-movie-field">
+                    <label for="anio">Año</label>
+                    <input
+                        type="text"
+                        name="anio"
+                        id="anio"
+                        placeholder="Año de lanzamiento"
+                    />
+                </div>
+                <div class="create-movie-field">
+                    <label for="genero">Genero</label>
+                    <input
+                        type="text"
+                        name="genero"
+                        id="genero"
+                        placeholder="Genero de la pelicula"
+                    />
+                </div>
+                <div class="create-movie-field">
+                    <label for="duracion">Duracion</label>
+                    <input
+                        type="text"
+                        name="duracion"
+                        id="duracion"
+                        placeholder="Duracion de la pelicula"
+                    />
+                </div>
+                <input
+                    class="create-movie-submit"
+                    type="submit"
+                    value="Enviar"
+                />
+            </form>
+        </div>
+    </body>
+</html>
