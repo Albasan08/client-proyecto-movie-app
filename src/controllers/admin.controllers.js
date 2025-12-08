@@ -45,7 +45,7 @@ const crearPelicula=async(req,res)=>{
     //console.log([...formData.entries()]);
 
     //captura la respuesta de la API en ese ENDPOINT
-    const respuesta = await fetch('http://localhost:3000/movies/createmovie',{
+    const respuesta = await fetch(`${process.env.URLBASE}/movies/createmovie`,{
                                    method:'POST',
                                    headers:{/*'Content-type':'application/json',*/'Authorization': `Bearer ${token}` },
                                    //body: JSON.stringify(body)
@@ -120,7 +120,7 @@ const editarPelicula = async (req, res) => {
     console.log([...formData.entries()]);
 
     // Llamada a la API para editar
-    const respuesta = await fetch(`http://localhost:3000/movies/editmovie/${id}`, {
+    const respuesta = await fetch(`${process.env.URLBASE}/movies/editmovie/${id}`, {
         method: 'PUT',
         headers: {'Authorization': `Bearer ${token}`},
         body: formData
@@ -155,7 +155,7 @@ const editarPeliculaForm = async (req, res) => {
 
     try {
         // Llamada a la API para obtener los datos actuales
-        const respuesta = await fetch(`http://localhost:3000/movies/editmovie/${id}`, {
+        const respuesta = await fetch(`${process.env.URLBASE}/movies/editmovie/${id}`, {
             method: 'GET',
             headers: {'Authorization': `Bearer ${token}`}
         });
@@ -186,7 +186,7 @@ const eliminarPelicula = async (req, res) => {
 
     try {
         // Llamada a la API para obtener los datos actuales
-        const respuesta = await fetch(`http://localhost:3000/movies/removemovie/${id}`, {
+        const respuesta = await fetch(`${process.env.URLBASE}/movies/removemovie/${id}`, {
             method: 'DELETE',
             headers: {'Authorization': `Bearer ${token}`}
         });
