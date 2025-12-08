@@ -37,8 +37,6 @@ const loginUser = async (req, res) => {
     }
 };
 
-
-
 const viewRegister = async (req, res) => {
     res.render("register");
 };
@@ -92,7 +90,7 @@ const favoritosUser = async (req, res) => {
     //captura mensajes de la query (cuando se venga por redireccion al borrar una peli)
     const msg = req.query.msg || null;
 
-    console.log(msg)
+    console.log(msg);
     //captura la respuesta de la API en ese ENDPOINT
     const respuesta = await fetch(`${process.env.URLBASE}/movies`, {
         method: "GET",
@@ -109,7 +107,11 @@ const favoritosUser = async (req, res) => {
     //ver que llega en data
     //console.log(data)
 
-    res.render("favoritos.ejs", { data:data,msg:msg});
+    res.render("favoritos.ejs", { data: data, msg: msg });
+};
+
+const viewDashboard = async (req, res) => {
+    res.render("dashboard");
 };
 
 module.exports = {
@@ -117,5 +119,6 @@ module.exports = {
     loginUser,
     viewRegister,
     registerUser,
-    favoritosUser
+    favoritosUser,
+    viewDashboard,
 };
