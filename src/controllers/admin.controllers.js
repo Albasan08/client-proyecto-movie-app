@@ -1,4 +1,33 @@
+const favoritosAdmin = async (req, res) => {
+    //captura el token desde las cookies o headers
+    const token =
+        req.cookies?.token || req.headers["authorization"]?.split(" ")[1];
 
+    //variable para guardar la respuesta en formato json
+    let data;
+
+    //captura mensajes de la query (cuando se venga por redireccion al borrar una peli)
+    const msg = req.query.msg || null;
+
+    console.log(msg)
+    //captura la respuesta de la API en ese ENDPOINT
+    const respuesta = await fetch("http://localhost:3000/all", {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        //body: JSON.stringify(body), //formato a JSON,
+    });
+
+    // transforma la respuesta a  formato JSON (porque siempre hay una respuesta de la API)
+    data = await respuesta.json();
+
+    //ver que llega en data
+    console.log(data)
+
+    res.render("favoritos.ejs", { data:data,msg:msg});
+};
 
 const crearPelicula=async(req,res)=>{
 
@@ -206,4 +235,4 @@ const eliminarPelicula = async (req, res) => {
     }       
 };
 
-module.exports={crearPelicula,crearPeliculaForm,editarPelicula,editarPeliculaForm,eliminarPelicula}
+module.exports={crearPelicula,crearPeliculaForm,editarPelicula,editarPeliculaForm,eliminarPelicula,favoritosAdmin}

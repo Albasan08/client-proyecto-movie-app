@@ -107,7 +107,7 @@ const favoritosUser = async (req, res) => {
     data = await respuesta.json();
 
     //ver que llega en data
-    //console.log(data)
+    console.log(data)
 
     res.render("favoritos.ejs", { data:data,msg:msg});
 };

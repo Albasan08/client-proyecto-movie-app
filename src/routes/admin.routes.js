@@ -14,8 +14,12 @@ const {
     crearPeliculaForm,
     editarPelicula,
     editarPeliculaForm,
-    eliminarPelicula
+    eliminarPelicula,
+    favoritosAdmin
 } = require("../controllers/admin.controllers");
+
+
+router.get("/", favoritosAdmin);
 
 // Mostrar formulario para crear pelicula
 router.get("/createmovie", crearPeliculaForm);
