@@ -89,6 +89,10 @@ const favoritosUser = async (req, res) => {
     //variable para guardar la respuesta en formato json
     let data;
 
+    //captura mensajes de la query (cuando se venga por redireccion al borrar una peli)
+    const msg = req.query.msg || null;
+
+    console.log(msg)
     //captura la respuesta de la API en ese ENDPOINT
     const respuesta = await fetch("http://localhost:3000/movies", {
         method: "GET",
@@ -105,7 +109,7 @@ const favoritosUser = async (req, res) => {
     //ver que llega en data
     //console.log(data)
 
-    res.render("favoritos.ejs", { data });
+    res.render("favoritos.ejs", { data:data,msg:msg});
 };
 
 module.exports = {

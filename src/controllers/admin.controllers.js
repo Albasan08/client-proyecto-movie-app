@@ -121,14 +121,14 @@ const editarPelicula = async (req, res) => {
 
     // Llamada a la API para editar
     const respuesta = await fetch(`http://localhost:3000/movies/editmovie/${id}`, {
-        method: 'POST',
+        method: 'PUT',
         headers: {'Authorization': `Bearer ${token}`},
         body: formData
     });
 
     data = await respuesta.json();
 
-    console.log(data)
+    //console.log(data)
     // si la respuesta no es ok, recoge los errores y los manda a la vista
     if (!respuesta.ok || data.ok === false) {
 
@@ -138,8 +138,11 @@ const editarPelicula = async (req, res) => {
         return res.render("editar.ejs", { data: body,msg });
     }
     
-    //Redirige a la lista de películas o muestra mensaje de éxito
-    res.render("editar.ejs", { data: body, msg: "Película actualizada correctamente" });
+    // viene del back e incluye url_imagen
+    const pelicula = data.data;
+
+    //envia la pelicula actualizada y mensaje de éxito
+    res.render("editar.ejs", { data: pelicula, msg: "Película actualizada correctamente" });
 };
 
 const editarPeliculaForm = async (req, res) => {
@@ -172,4 +175,35 @@ const editarPeliculaForm = async (req, res) => {
     }       
 }; 
 
-module.exports={crearPelicula,crearPeliculaForm,editarPelicula,editarPeliculaForm}
+
+const eliminarPelicula = async (req, res) => {
+
+    //captura el id de la pelicula desde los parametros
+    const { id } = req.params;
+
+    // Captura el token desde cookies o headers
+    const token = req.cookies?.token || req.headers["authorization"]?.split(" ")[1];
+
+    try {
+        // Llamada a la API para obtener los datos actuales
+        const respuesta = await fetch(`http://localhost:3000/movies/removemovie/${id}`, {
+            method: 'DELETE',
+            headers: {'Authorization': `Bearer ${token}`}
+        });
+
+        const data = await respuesta.json();
+        console.log("IMprimiendo respuesta de back en cliente:",data)
+
+        //return res.redirect('/movies',{data:data.data});
+
+        return res.redirect(`/movies?msg=${encodeURIComponent(data.msg)}`)
+
+    } catch (error) {
+        console.error("Error al cargar datos de la película:", error);
+        // Renderiza con data vacío o mensaje de error
+       return res.redirect(`/movies/editmovie/${id}?msg=${encodeURIComponent("Error al eliminar la película")}`);
+        //return res.render("/movies/editmovie", )   
+    }       
+};
+
+module.exports={crearPelicula,crearPeliculaForm,editarPelicula,editarPeliculaForm,eliminarPelicula}
