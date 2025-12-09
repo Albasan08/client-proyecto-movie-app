@@ -57,7 +57,7 @@ body {
     transform: scale(1.35);
 }
 
-.card__address {
+.card__director {
     margin-top: 0.5rem;
 }
 
@@ -70,7 +70,7 @@ body {
     padding: 2rem;
 }
 
-.card__price {
+.card__genero {
     background-color: var(--white);
     color: var(--text);
     z-index: 1;

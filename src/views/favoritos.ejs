@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <title>Cards</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -57,91 +57,121 @@
         </header>
 
         <div class="cards">
-
             <%if(typeof msg !== 'undefined' && msg){%>
-            <p style="color:red"><%- msg%></p>
-            <%}%>
+            <p style="color: red"><%- msg%></p>
+            <%}%> <%if(data.ok){ %> <% data.data.forEach(pelicula => { %>
+            <article class="card">
+                <div class="card__preview">
+                    <img
+                        src="http://localhost:3000/<%= pelicula.url_imagen %> %>"
+                        alt="portada de pelicula <%= pelicula.titulo %>"
+                    />
+                    <div class="card__genero"><%= pelicula.genero %></div>
+                </div>
 
-            <%if(data.ok){ %>
+                <div class="card__content">
+                    <h2 class="card__title"><%=pelicula.titulo %></h2>
+                    <p class="card__director"><%= pelicula.director %></p>
+                    <div class="card__bottom">
+                        <div class="card__properties"><%= pelicula.anio %></div>
+                        <button class="card__btn">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                                stroke="currentColor"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path
+                                    stroke="none"
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                />
+                                <path
+                                    d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"
+                                />
+                            </svg>
+                        </button>
+                        <% if (pelicula.rol && pelicula.rol === "admin") { %>
 
-                 <% data.data.forEach(pelicula => { %>
-                    <article class="card">
-                        <div class="card__preview">
-                            <img
-                                src="http://localhost:3000/<%= pelicula.url_imagen %> %>"
-                                alt="portada de pelicula <%= pelicula.titulo %>"
-                            />
-                            <div class="card__price"><%= pelicula.genero %></div>
-                        </div>
-
-                        <div class="card__content">
-                            <h2 class="card__title"><%=pelicula.titulo %></h2>
-                            <p class="card__address"><%= pelicula.director %></p>
-                            <div class="card__bottom">
-                                <div class="card__properties"><%= pelicula.anio %></div>
-                                <button class="card__btn">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
+                        <!-- FORMULARIO EDITAR -->
+                        <form
+                            action="/movies/editmovie/<%= pelicula.id_pelicula %>"
+                            method="GET"
+                        >
+                            <button class="card__btn edit-btn" title="Editar">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
                                         fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    >
-                                        <path
-                                            stroke="none"
-                                            d="M0 0h24v24H0z"
-                                            fill="none"
-                                        />
-                                        <path
-                                            d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"
-                                        />
-                                    </svg>
-                                </button>
-                                <% if (pelicula.rol && pelicula.rol === "admin") { %>
+                                    />
+                                    <path
+                                        d="M7 17l-3 3l1 1l3 -3l12 -12a2.828 2.828 0 0 0 -4 -4l-12 12z"
+                                    />
+                                    <path d="M16 5l3 3" />
+                                </svg>
+                            </button>
+                        </form>
 
-                                    <!-- FORMULARIO EDITAR -->
-                                    <form action="/movies/editmovie/<%= pelicula.id_pelicula %>" method="GET">
-                                        <button class="card__btn edit-btn" title="Editar">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                                fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                                <path d="M7 17l-3 3l1 1l3 -3l12 -12a2.828 2.828 0 0 0 -4 -4l-12 12z"/>
-                                                <path d="M16 5l3 3"/>
-                                            </svg>
-                                        </button>
-                                    </form>
+                        <!-- FORMULARIO BORRAR -->
+                        <form
+                            action="/movies/removemovie/<%= pelicula.id_pelicula %>"
+                            method="POST"
+                        >
+                            <button
+                                class="card__btn delete-btn"
+                                title="Eliminar"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                >
+                                    <path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"
+                                    />
+                                    <path d="M4 7h16" />
+                                    <path d="M10 11v6" />
+                                    <path d="M14 11v6" />
+                                    <path
+                                        d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"
+                                    />
+                                    <path
+                                        d="M9 7v-2a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v2"
+                                    />
+                                </svg>
+                            </button>
+                        </form>
 
-                                    <!-- FORMULARIO BORRAR -->
-                                    <form action="/movies/removemovie/<%= pelicula.id_pelicula %>" method="POST">
-                                        <button class="card__btn delete-btn" title="Eliminar">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
-                                                fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                                <path d="M4 7h16" />
-                                                <path d="M10 11v6" />
-                                                <path d="M14 11v6" />
-                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                                <path d="M9 7v-2a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v2" />
-                                            </svg>
-                                        </button>
-                                    </form>
+                        <% } %>
+                    </div>
+                </div>
+            </article>
 
-
-                                <% } %>
-                                
-                            </div>
-                        </div>
-                    </article>
-
-                <% }) %>
-            <%}%>
-            
+            <% }) %> <%}%>
         </div>
         <script src="js/main.js"></script>
     </body>
